@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>radio-select</title>
+	<script type="text/javascript" src="../vue.js"></script>
+
+</head>
+<body>
+      <div id="app">
+      	  <h1>选择性别</h1>
+      	  <template v-for="sex in sexItems">
+      	  	<input type="radio" name="sex"
+             :value="sex"
+             :id="sex"
+             v-model="currentSex"
+      	  	>
+      	  </template>
+      	  <h1>人物介绍</h1>
+          <ul>
+              <li v-for="data in sexData">
+              	  <p>name : {{data.name}}</p>
+              	  <p>age : {{data.age}}</p>
+              	  <p>birth : {{data.birth}}</p>
+              	  <p>desc : {{data.desc}}</p>
+              </li>
+          </ul>
+      </div>
+      <script type="text/javascript" src="app.js"></script>
+</body>
+</html>
