@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>set-delete</title>
+    <script type="text/javascript" src="../vue.js"></script>
+</head>
+<body> 
+       <div id="app">
+       	    <p>{{message}}</p>
+       	    <p>{{books.name}},{{books.price}}</p>
+       </div>
+
+       <script type="text/javascript">
+       	 var books={"name":"c#","price":"12"};
+       	    var app=new Vue({
+                el:"#app",
+                data:{
+                	message:"message",
+                	books:books
+                }
+       	    });
+
+       	    setTimeout(function(){
+       	    	Vue.set(app.$data,"message","hello world")
+       	    },2000) 
+
+       	    setTimeout(function(){
+       	    	Vue.delete(books,"name")
+       	    },2000)
+
+       	    setTimeout(function(){
+       	    	Vue.set(books,"name","js")
+       	    	Vue.set(books,"price","$203")
+       	    },4000)
+       </script>
+</body>
+</html>

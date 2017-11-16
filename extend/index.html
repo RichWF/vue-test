@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>extend</title>
+	<script type="text/javascript" src="../vue.js"></script>
+</head>
+<body>
+       <div id="app"></div>
+
+       <script type="text/javascript">
+           //创建构造器
+       	   var extend=Vue.extend({
+       	   	  template:"<p>{{name}} is {{country}}</p>",
+       	   	  data:function(){
+       	   	  	  return {
+       	   	  	  	 name:"rich",
+       	   	  	  	 country:"china"
+       	   	  	  }
+       	   	  }
+       	   });
+           
+           //实例化构造器，并挂载到一个元素上
+           new extend().$mount("#app");
+       </script>
+</body>
+</html>

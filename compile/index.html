@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>compile</title>
+	<script type="text/javascript" src="../vue.js"></script>
+</head>
+<body>
+     <div id="app"></div>
+     <script type="text/javascript">
+         //在 render 函数中编译模板字符串
+     	var res= Vue.compile("<div><span>{{msg}}</span></div>");
+     	var app=new Vue({
+     		el:"#app",
+     		data:{
+     			msg:"hello"
+     		},
+     		render:res.render,
+     		staticRenderFns: res.staticRenderFns
+     	})
+
+     	console.log("version:"+Number(Vue.version.split('.')[0]));
+     </script>
+</body>
+</html>

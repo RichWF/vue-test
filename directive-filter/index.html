@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>directive-filter</title>
+	<script type="text/javascript" src="../vue.js"></script>
+</head>
+<body>
+      <div id="app">
+      	 <input type="text" v-my-directive v-model="message" >
+      	 <p>{{message|my-filter}}</p>
+      </div>
+      <script type="text/javascript">
+      	  Vue.directive('my-directive',{
+      	  	  inserted:function(el){
+      	  	  	 	el.focus();
+      	  	  },
+      	  	  bind:function(el){
+      	  	  	console.log("current value is "+el.value)
+      	  	  },
+      	  	  update: function (el) {
+      	  	  	 console.log("current value is "+el.value);
+      	  	  }
+      	  });
+
+      	  Vue.filter('my-filter',function(value){
+              return value.toUpperCase();
+      	  })
+
+      	  Vue.mixin({
+			  created: function () {
+			    var myOption = this.$options.myOption
+			    if (myOption) {
+			      console.log(myOption)
+			    }
+			  }
+			})
+
+
+      	  var app=new Vue({
+      	  	el:"#app",
+      	  	data:{
+      	  		message:"hello vue"
+      	  	},
+      	  	myOption:"hello"
+      	  })
+
+      </script>
+</body>
+</html>

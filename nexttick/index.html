@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>nextTick</title>
+	<script type="text/javascript" src="../vue.js"></script>
+</head>
+<body>
+       <div id="app">
+       	    <ul id="ul">
+       	    	<li v-for="item in items">
+       	    		{{item}}
+       	    	</li>
+       	    </ul>
+
+       </div>
+
+       <script type="text/javascript">
+       	    var app=new Vue({
+                el:"#app",
+                data:{
+                	items:['a','b','c','d'],
+                },
+                created:function(){
+                	//由于vue是异步渲染dom，所以需要用nextTick来延迟处理
+                	console.log(document.getElementById("ul").getElementsByTagName("li").length);
+                	Vue.nextTick(function(){
+                		console.log(document.getElementById("ul").getElementsByTagName("li").length);
+                	})
+                }
+       	    });
+
+       	   
+       </script>
+</body>
+</html>
