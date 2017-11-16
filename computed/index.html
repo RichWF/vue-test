@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>computed</title>
+	<script type="text/javascript" src="../vue.js"></script>
+</head>
+<body>
+      <div id="app"></div>
+      <script type="text/javascript">
+      	  var app=new Vue({
+      	  	el:"#app",
+      	  	data:{
+      	  		a:1
+      	  	},
+      	  	computed:{
+      	  		double:function(){
+      	  			return this.a*2;
+      	  		},
+      	  		avalue:{
+      	  			get:function(){
+      	  				return this.a;
+      	  			},
+      	  			set:function(val){
+                       this.a=val; 
+      	  			}
+      	  		}
+      	  	}
+      	  })
+
+      	  console.log(app.double);
+      	  console.log(app.avalue);
+      	  app.avalue=20; //如果没有声明setter ,则会报错it has no setter.
+      	  console.log(app.avalue);
+      </script>
+</body>
+</html>
