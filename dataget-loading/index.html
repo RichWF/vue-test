@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>数据获取-loading加载</title>
+	<script type="text/javascript" src="../vue.js"></script>
+	<script type="text/javascript" src="../vue-router.js"></script>
+</head>
+<body>
+	<div id="app">
+		<router-link to="/user/nick">goto to nick</router-link>
+		<router-link to="/user/rich">goto to rich</router-link>
+		<router-view></router-view>
+	</div>
+
+	<template id="post">
+		<div class="container">
+			<div class="post" v-if="loading">
+				Loading....
+			</div>
+			<div class="error" v-if="error">
+				{{error}}
+			</div>
+			<div class="content" v-if="post">
+				<h2>{{post.title}}</h2>
+				<p>{{post.content}}</p>
+			</div>
+		</div>
+	</template>
+
+	<script type="text/javascript">
+
+		const routes=[
+		{path:'/user/:name',component:
+			{
+				template:"#post",
+				data(){
+					return {
+						loading:false,
+						error:null,
+						post:null
+					}
+				},
+				created(){
+					this.fetchData()
+				},
+				watch:{
+					'$route': 'fetchData'
+				},
+				methods:{
+					fetchData(){
+						this.error=this.post=null;
+						this.loading=true;
+                        var self=this;
+						setTimeout(function(){
+							self.loading=false;
+							self.error="无错误";
+							self.post={title:"标题",content:"内容"};
+						},2000);
+					}
+				}
+			}
+		}
+		]
+
+		const router=new VueRouter({
+			routes
+		})
+
+		var app=new Vue({
+			router,
+			el:"#app"
+		})
+	</script>
+</body>
+</html>
