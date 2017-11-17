@@ -4,8 +4,8 @@
 	<title>router</title>
 </head>
 <body>
-	<script src="https://unpkg.com/vue/dist/vue.js"></script>
-	<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+	<script src="../vue.js"></script>
+	<script src="../vue-router.js"></script>
     <style type="text/css">
     	.router-link-active {
 		  color: red;
@@ -19,6 +19,8 @@
 	    <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
 	    <router-link to="/foo">Go to Foo</router-link>
 	    <router-link to="/bar">Go to Bar</router-link>
+	    <router-link to="/user/nick">Go to Nick</router-link>
+	    <router-link to="/user/rich">Go to Rich</router-link>
 	  </p>
 	  <!-- 路由出口 -->
 	  <!-- 路由匹配到的组件将渲染在这里 -->
@@ -32,6 +34,17 @@
 		// 可以从其他文件 import 进来
 		const Foo = { template: '<div>foo</div>' }
 		const Bar = { template: '<div>bar</div>' }
+		const User= { template:'<div>User {{$route.params.id}}</div>',
+                      watch:{
+                      	$route(to,from){
+                      		console.log("to:"+to);
+                      		console.log("from:"+from);
+                      	}
+                      },
+                      created:function(){
+                      	console.log("user component is created");
+                      } 
+	                }
 
 		// 2. 定义路由
 		// 每个路由应该映射一个组件。 其中"component" 可以是
@@ -40,7 +53,8 @@
 		// 我们晚点再讨论嵌套路由。
 		const routes = [
 		  { path: '/foo', component: Foo },
-		  { path: '/bar', component: Bar }
+		  { path: '/bar', component: Bar },
+		  { path:'/user/:id',component:User} //定义动态路由
 		]
 
 		// 3. 创建 router 实例，然后传 `routes` 配置
