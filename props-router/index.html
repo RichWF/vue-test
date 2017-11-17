@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Props 传参路由</title>
+	<script type="text/javascript" src="../vue.js"></script>
+	<script type="text/javascript" src="../vue-router.js"></script>
+</head>
+<body>
+     <div id="app">
+        <router-link to="/user/nick">nick</router-link>
+        <router-link to="/user/rich">rich</router-link>
+        <router-link to="/profile/rich/nick">usercenter</router-link>
+     	<router-view></router-view>
+     	<router-view name="profile"></router-view>
+     	<router-view name="about"></router-view>
+     </div>
+     <script type="text/javascript">
+     	const user={template:'<div>{{name}}</div>',props:['name']}
+     	const profile={template:'<div>{{profile}}</div>',props:['profile']}
+     	const about={template:'<div>{{about}}</div>',props:['about']}
+     	const routes=[
+     	   //使用props解耦
+           { path:'/user/:name',component:user,props:true },
+
+           //含命名视图的路由
+           {path:'/profile/:profile/:about',components:{
+           	  profile:profile,about:about
+           },
+           props:{profile:true,about:true}}
+     	];
+
+     	const router=new VueRouter({
+     		routes
+     	})
+
+     	var app=new Vue({
+     		el:"#app",
+     		router
+     	})
+     </script>
+</body>
+</html>

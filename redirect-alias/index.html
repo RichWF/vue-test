@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>重定向-别名</title>
+	<script type="text/javascript" src="../vue.js"></script>
+	<script type="text/javascript" src="../vue-router.js"></script>
+	<style type="text/css">
+    	.router-link-active {
+		  color: red;
+		}
+    </style>
+</head>
+<body>
+      <div id="app">
+        <router-link to="/t1">goto t1</router-link>
+        <router-link to="/t2">goto t2</router-link>
+        <router-link to="/t3">goto t3</router-link>
+        <router-link to="/t4">goto t4</router-link>
+        <router-link to="/t5">goto t5</router-link>
+        <router-link to="/t6">goto t6</router-link>
+      	<router-view></router-view>
+      </div>
+      <script type="text/javascript">
+      	const temp1={template:'<div>template1</div>'}
+        const temp5={template:'<div>template5</div>'}
+        const routes=[
+           {path:'/t1',name:'t1',component:temp1},
+           //重定向
+           {path:'/t2',redirect:'/t1'},
+           {path:'/t3',redirect:{name:'t1'}},
+           {path:'/t4',redirect:to=>{
+           	   return {name:'t1'}
+           }},
+           //别名
+           {
+             path:'/t5',component:temp5,alias:'/t6'
+           }
+
+        ]
+
+        const router=new VueRouter({
+        	routes
+        })
+
+        var app=new Vue({
+        	router,
+        	el:"#app"
+        })
+
+      </script>
+</body>
+</html>
