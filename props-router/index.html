@@ -4,39 +4,71 @@
 	<title>Props 传参路由</title>
 	<script type="text/javascript" src="../vue.js"></script>
 	<script type="text/javascript" src="../vue-router.js"></script>
+	<style>
+		/* 可以设置不同的进入和离开动画 */
+	/* 设置持续时间和动画函数 */
+	.slide-fade-enter-active {
+	  transition: all .3s ease;
+	}
+	.slide-fade-leave-active {
+	  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+	}
+	.slide-fade-enter, .slide-fade-leave-to
+	/* .slide-fade-leave-active for below version 2.1.8 */ {
+	  transform: translateX(10px);
+	  opacity: 0;
+	}
+	</style>
 </head>
 <body>
-     <div id="app">
-        <router-link to="/user/nick">nick</router-link>
-        <router-link to="/user/rich">rich</router-link>
-        <router-link to="/profile/rich/nick">usercenter</router-link>
-     	<router-view></router-view>
-     	<router-view name="profile"></router-view>
-     	<router-view name="about"></router-view>
-     </div>
-     <script type="text/javascript">
-     	const user={template:'<div>{{name}}</div>',props:['name']}
-     	const profile={template:'<div>{{profile}}</div>',props:['profile']}
-     	const about={template:'<div>{{about}}</div>',props:['about']}
-     	const routes=[
+	<div id="app">
+		<router-link to="/user/nick">nick</router-link>
+		<router-link to="/user/rich">rich</router-link>
+		<router-link to="/profile/rich/nick">usercenter</router-link>
+		<router-link to="/static">static</router-link>
+		<router-link to="/dynamic/1">dynamic</router-link>
+		<router-link to="/search?q=rich">search</router-link>
+		<router-view></router-view>
+		<router-view name="profile"></router-view>
+		<router-view name="about"></router-view>
+		<router-view name="dynamic"></router-view>
+		<router-view name="search"></router-view>
+	</div>
+	<script type="text/javascript">
+		const user={template:'<transition name="slide-fade"><div>{{name}}</div></transition>',props:['name']}
+		const profile={template:'<transition name="slide-fade"><div>{{profile}}</div></transition>',props:['profile']}
+		const about={template:'<transition name="slide-fade"><div>{{about}}</div></transition>',props:['about']}
+		const dynamic={template:'<transition name="slide-fade"><div>{{name}}</div></transition>',props:['name']}
+		const search={template:'<transition name="slide-fade"><div>search result:{{query}}</div></transition>',props:['query']}
+		const routes=[
      	   //使用props解耦
-           { path:'/user/:name',component:user,props:true },
+     	   { path:'/user/:name',component:user,props:true },
 
            //含命名视图的路由
            {path:'/profile/:profile/:about',components:{
-           	  profile:profile,about:about
+           	profile:profile,about:about
            },
-           props:{profile:true,about:true}}
-     	];
+           props:{profile:true,about:true}},
+           {path:'/static',component:about,props:{about:"static"}}, //静态值
+           {path:'/dynamic/:year',component:dynamic,props:dynamicPropsFn},
+           {path:'/search',component:search,props:(route)=>({query:route.query.q})}
+           ];
 
-     	const router=new VueRouter({
-     		routes
-     	})
+           const router=new VueRouter({
+           	routes
+           })
 
-     	var app=new Vue({
-     		el:"#app",
-     		router
-     	})
-     </script>
-</body>
-</html>
+           var app=new Vue({
+           	el:"#app",
+           	router
+           })
+
+           function dynamicPropsFn(route){
+           	const now=new Date();
+           	return {
+           		name:(now.getFullYear()+parseInt(route.params.year))+"!"
+           	}
+           }
+       </script>
+   </body>
+   </html>
