@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>scroll-behavior</title>
+	<script type="text/javascript" src="../vue.js"></script>
+	<script type="text/javascript" src="../vue-router.js"></script>
+</head>
+<body>
+	<div id="app">
+		<router-link to="/scroll/nick">goto nick</router-link>
+		<router-link to="/scroll/rich">goto rich</router-link>
+		<router-view></router-view>
+	</div>
+
+	<template id="scroll">
+		<div>
+			<p>scroll</p>
+			<div style="height: 500px">{{$route.params.name}}</div>
+			<p>behavior</p>
+		</div>
+	</template>
+
+	<script type="text/javascript">
+		const scroll={template:'#scroll'}
+
+		const routes=[
+		{path:'/scroll/:name',component:scroll}
+		]
+
+		const router=new VueRouter({
+			routes,
+			scrollBehavior (to, from, savedPosition) {
+				if (savedPosition) {
+					return savedPosition
+				} else {
+					return { x: 0, y:500 }
+				}
+			}
+		})
+
+		var app=new Vue({
+			router,
+			el:"#app"
+		})
+	</script>
+</body>
+</html>

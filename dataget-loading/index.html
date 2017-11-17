@@ -28,38 +28,36 @@
 	</template>
 
 	<script type="text/javascript">
-
-		const routes=[
-		{path:'/user/:name',component:
-			{
-				template:"#post",
-				data(){
-					return {
-						loading:false,
-						error:null,
-						post:null
-					}
-				},
-				created(){
-					this.fetchData()
-				},
-				watch:{
-					'$route': 'fetchData'
-				},
-				methods:{
-					fetchData(){
-						this.error=this.post=null;
-						this.loading=true;
-                        var self=this;
-						setTimeout(function(){
-							self.loading=false;
-							self.error="无错误";
-							self.post={title:"标题",content:"内容"};
-						},2000);
-					}
+		var post={
+			template:"#post",
+			data(){
+				return {
+					loading:false,
+					error:null,
+					post:null
+				}
+			},
+			created(){
+				this.fetchData()
+			},
+			watch:{
+				'$route': 'fetchData'
+			},
+			methods:{
+				fetchData(){
+					this.error=this.post=null;
+					this.loading=true;
+					var self=this;
+					setTimeout(function(){
+						self.loading=false;
+						self.error="无错误";
+						self.post={title:"标题",content:"内容"};
+					},2000);
 				}
 			}
 		}
+		const routes=[
+		{path:'/user/:name',component:}
 		]
 
 		const router=new VueRouter({
